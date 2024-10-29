@@ -51,7 +51,7 @@ class Textfieldstask extends StatelessWidget {
               SizedBox(height: 20),
               buildTextField("Contact Number"),
               SizedBox(height: 20),
-              buildTextField("Address:"),
+              buildTextField("Address"),
               SizedBox(height: 20),
               buildTextField("CNIC"),
               SizedBox(height: 10), 

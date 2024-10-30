@@ -10,43 +10,38 @@ class Textfieldstask extends StatefulWidget {
 class _TextfieldstaskState extends State<Textfieldstask> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String? validateName (String? value){
-    
-   if (value == Null || value!.isEmpty){
-    return 'Name cannot be empty';
-   }
-   else if(!RegExp(r'^[a-zA-Z]+$').hasMatch(value)){
-    return 'Only Alphabet Is Alowed in Name';
-   }
-   return null;
+  String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Name cannot be empty';
+    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+      return 'Only Alphabet Is Allowed in Name';
+    }
+    return null;
   }
 
-  String? validateEmail (String? value){
-     if (value == Null || value!.isEmpty){
-    return 'Email cannot be empty';
-   }
-   else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)){
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email cannot be empty';
+    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$').hasMatch(value)) {
       return 'Enter a valid email';
-   }
-   return null;
+    }
+    return null;
   }
 
-  String? validatePassword (String? value){
-     if (value == Null || value!.isEmpty){
-    return 'Password cannot be empty';
-   }
-   if (value!.length < 8){
-    return 'Password Must Be 8 Characters';
-   }
-
-   else if(!RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{8,}$').hasMatch(value)){
-    return 'Password must contain letters, numbers, and symbols';
-   }
-   return null;
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    } else if (value.length < 8) {
+      return 'Password must be at least 8 characters';
+    } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{8,}$')
+        .hasMatch(value)) {
+      return 'Password must contain letters, numbers, and symbols';
+    }
+    return null;
   }
 
   String? validateCNIC(String? value) {
-    if (value == null || value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return 'CNIC cannot be empty';
     } else if (value.length != 13) {
       return 'CNIC must be exactly 13 digits';
@@ -72,13 +67,10 @@ class _TextfieldstaskState extends State<Textfieldstask> {
     return null;
   }
 
-
-
-
-  Widget buildTextField(String label) {
+  Widget buildTextField(String label, String? Function(String?) validator) {
     return Container(
       width: 300,
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
           labelText: label,
           focusedBorder: OutlineInputBorder(
@@ -94,6 +86,7 @@ class _TextfieldstaskState extends State<Textfieldstask> {
             ),
           ),
         ),
+        validator: validator,
       ),
     );
   }
@@ -119,28 +112,27 @@ class _TextfieldstaskState extends State<Textfieldstask> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
-                buildTextField("Name"),
+                buildTextField("Name", validateName),
                 SizedBox(height: 20),
-                buildTextField("Email"),
+                buildTextField("Email", validateEmail),
                 SizedBox(height: 20),
-                buildTextField("Password"),
+                buildTextField("Password", validatePassword),
                 SizedBox(height: 20),
-                buildTextField("Contact Number"),
+                buildTextField("Contact Number", validateContact),
                 SizedBox(height: 20),
-                buildTextField("Address"),
+                buildTextField("Address", validateAddress),
                 SizedBox(height: 20),
-                buildTextField("CNIC"),
+                buildTextField("CNIC", validateCNIC),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-               SnackBar(content: Text('Processing Data')),
-                                   );
-                      }
+                    if (_formKey.currentState?.validate() ?? false) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Processing Data')),
+                      );
+                    }
                   },
                   child: Text('Submit'),
-                 
                 ),
               ],
             ),

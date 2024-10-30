@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Textfieldstask extends StatelessWidget {
+class Textfieldstask extends StatefulWidget {
   const Textfieldstask({super.key});
+
+  @override
+  _TextfieldstaskState createState() => _TextfieldstaskState();
+}
+
+class _TextfieldstaskState extends State<Textfieldstask> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget buildTextField(String label) {
     return Container(
-      width: 300 ,
+      width: 300,
       child: TextField(
         decoration: InputDecoration(
           labelText: label,
@@ -33,29 +40,45 @@ class Textfieldstask extends StatelessWidget {
         title: Text("Text Field Validation"),
         backgroundColor: Colors.blueAccent,
       ),
-      body: SingleChildScrollView( 
+      body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-              SizedBox(height: 20), 
-              Text("TEXT FIELD VALIDATION", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-              SizedBox(height: 20), 
-              buildTextField("Name"),
-              SizedBox(height: 20),
-              buildTextField("Email"),
-              SizedBox(height: 20),
-              buildTextField("Password"),
-              SizedBox(height: 20),
-              buildTextField("Contact Number"),
-              SizedBox(height: 20),
-              buildTextField("Address"),
-              SizedBox(height: 20),
-              buildTextField("CNIC"),
-              SizedBox(height: 10), 
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  "TEXT FIELD VALIDATION",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 20),
+                buildTextField("Name"),
+                SizedBox(height: 20),
+                buildTextField("Email"),
+                SizedBox(height: 20),
+                buildTextField("Password"),
+                SizedBox(height: 20),
+                buildTextField("Contact Number"),
+                SizedBox(height: 20),
+                buildTextField("Address"),
+                SizedBox(height: 20),
+                buildTextField("CNIC"),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+               SnackBar(content: Text('Processing Data')),
+                                   );
+                      }
+                  },
+                  child: Text('Submit'),
+                 
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -10,6 +10,71 @@ class Textfieldstask extends StatefulWidget {
 class _TextfieldstaskState extends State<Textfieldstask> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  String? validateName (String? value){
+    
+   if (value == Null || value!.isEmpty){
+    return 'Name cannot be empty';
+   }
+   else if(!RegExp(r'^[a-zA-Z]+$').hasMatch(value)){
+    return 'Only Alphabet Is Alowed in Name';
+   }
+   return null;
+  }
+
+  String? validateEmail (String? value){
+     if (value == Null || value!.isEmpty){
+    return 'Email cannot be empty';
+   }
+   else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)){
+      return 'Enter a valid email';
+   }
+   return null;
+  }
+
+  String? validatePassword (String? value){
+     if (value == Null || value!.isEmpty){
+    return 'Password cannot be empty';
+   }
+   if (value!.length < 8){
+    return 'Password Must Be 8 Characters';
+   }
+
+   else if(!RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{8,}$').hasMatch(value)){
+    return 'Password must contain letters, numbers, and symbols';
+   }
+   return null;
+  }
+
+  String? validateCNIC(String? value) {
+    if (value == null || value!.isEmpty) {
+      return 'CNIC cannot be empty';
+    } else if (value.length != 13) {
+      return 'CNIC must be exactly 13 digits';
+    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Enter a valid CNIC';
+    }
+    return null;
+  }
+
+  String? validateAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Address cannot be empty';
+    }
+    return null;
+  }
+
+  String? validateContact(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Contact number cannot be empty';
+    } else if (!RegExp(r'^[0-9]{10,12}$').hasMatch(value)) {
+      return 'Enter a valid contact number (10-12 digits)';
+    }
+    return null;
+  }
+
+
+
+
   Widget buildTextField(String label) {
     return Container(
       width: 300,
